@@ -1,0 +1,372 @@
+  
+<html>   
+   <head>
+		
+		<style>
+		
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 10%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+#submit,#change{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 10%;
+}
+
+#view{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+#view:hover {
+  opacity: 0.8;
+}
+
+/* Set a style for all buttons */
+#comments{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+#comments:hover {
+  opacity: 0.8;
+}
+
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+
+
+#webpages  {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#webpages  td, #webpages  th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#webpages  tr:nth-child(even){background-color: #f2f2f2;}
+
+#webpages tr:hover {background-color: #ddd;}
+
+#webpages  th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: black;
+}
+.navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+}
+			
+</style>
+			<div class="navbar">
+<a href="register.html">Register</a>
+ <a href="login.html">Login</a>
+  <a href="web.html">Search</a>
+ <a href="update.html">Update Account</a>
+</div>
+		<div class="container"id="container">
+			<h1>Find a User</h1>
+			<p>Search for a user to view their webpages</p><hr>
+			<input type="text" id="user"><br>
+			<input type="button" id="submit" value="Submit" onclick="getWebPages()">
+			<hr>
+			<h1>Find webpage</h1>
+			<p>Search for a keyword to view the webpages</p><hr>
+			<input type="text" id="keyword"><br>
+			<input type="button" id="submit" value="Submit" onclick="getWebPagesByKeyword()">
+			
+			
+		<h1>WebPages</h1>
+		<hr>
+		<table id="webpages" border=1>
+			<tr>
+				<th>From</th>
+				<th>Name</th>
+				<th>Image</th>
+				<th>Message</th>
+				<th>Date</th>
+				<th>Comments</th>
+				<th>View</th>		
+			</tr>
+		</table>
+		</div>
+		
+		
+		<script src = "/socket.io/socket.io.js"></script>
+		<script>
+			
+			var socket = io();
+			
+			var webPagesTable = document.getElementById("webpages");
+			var i,username=document.getElementById("user");
+			var keyword = document.getElementById("keyword");
+			var comment="",commentsString="",passwordValue,usernameValue,response,fileName;
+			
+			function getWebPages(){
+				
+				username.value=username.value.trim();
+				
+				socket.emit("getUserWebPages",username.value);
+				
+				webPagesTable.innerHTML='<tr>\
+								<th>From</th>\
+								<th>Name</th>\
+								<th>Image</th>\
+								<th>Message</th>\
+								<th>Date</th>\
+								<th>Comments</th>\
+								<th>View</th>\
+							</tr>';
+							
+			}
+			
+			function getWebPagesByKeyword(){
+			
+				keyword.value=keyword.value.trim();
+				
+				socket.emit("getKeywordWebPages",keyword.value);
+				
+				webPagesTable.innerHTML='<tr>\
+								<th>From</th>\
+								<th>Name</th>\
+								<th>Image</th>\
+								<th>Message</th>\
+								<th>Date</th>\
+								<th>Comments</th>\
+								<th>View</th>\
+							</tr>';
+			}
+
+				socket.on("getWebPage",function(webPage){
+					
+					if(webPage.username == username.value && !webPage.deleted){
+						
+						
+						webPagesTable.innerHTML+='<tr >\
+						<td>'+webPage.username+'</td>\
+						<td>'+webPage.name+'</td>\
+						<td>'+webPage.image+'</td>\
+						<td>'+webPage.message+'</td>\
+						<td>'+webPage.date+'</td>\
+						<td><input type="button" id="comments" value="Comments" onclick="viewComments(\''+webPage.name+'\')"></td>\
+						<td><input type="button" id="view" value="View" onclick="viewWebPage(\''+webPage.name+'\')"></td>\
+						</tr>';
+						
+					}
+				});
+				
+				socket.on("getKeywordWebPage",function(webPage){
+					
+					if(!webPage.deleted){
+						
+						webPagesTable.innerHTML+='<tr >\
+						<td>'+webPage.username+'</td>\
+						<td>'+webPage.name+'</td>\
+						<td>'+webPage.image+'</td>\
+						<td>'+webPage.message+'</td>\
+						<td>'+webPage.date+'</td>\
+						<td><input type="button" id="comments" value="Comments" onclick="viewComments(\''+webPage.name+'\')"></td>\
+						<td><input type="button" id="view" value="View" onclick="viewWebPage(\''+webPage.name+'\')"></td>\
+						</tr>';
+						
+					}
+				});
+				
+				function viewComments(filename){
+					
+					
+					socket.emit("sendComments",filename);
+
+					fileName=filename;
+				}
+				
+				function viewWebPage(file){
+					
+					window.open(file);
+				}
+				
+				socket.on("getComments",function(comments){
+					
+					commentsString="";
+					
+					for(i=0;i<=comments.length-1;i++){
+						
+						if(comments[i] == "~"){
+							commentsString+="\n";
+						}
+						
+						else if(comments[i] !="~"){
+							commentsString+=comments[i];
+						}
+					}
+					
+					response = confirm(commentsString+"\n"+"Do you want to send a comment?");
+					
+					if(response){
+						
+						usernameValue=prompt("What is your username?").trim();
+						passwordValue=prompt("What is your password?").trim();
+						
+						socket.emit("validateLoginInfo",{username:usernameValue,password:passwordValue});
+						
+					}
+				});
+				
+				socket.on("login",function(login){
+					
+					if(login){
+					
+						comment = prompt(commentsString+"\n"+"Type comment here");
+						
+						socket.emit("addComment",{file:fileName,comment:comment,username:usernameValue});
+						
+						alert("Comment sent");
+					}
+					
+					else if(!login){
+						alert("Login failed");
+					}
+				});
+				
+				socket.on("userNotExist",function(user){
+					
+					alert("Username "+user+" is not registered");
+					
+				});
+			
+					
+		</script>
+	
+	</head>
+</html>
