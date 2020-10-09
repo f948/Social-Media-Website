@@ -1,0 +1,479 @@
+<html>   
+   <head>
+		
+		<style>
+		
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 10%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+#delete{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+#delete:hover {
+  opacity: 0.8;
+}
+
+
+/* Set a style for all buttons */
+#view{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+#view:hover {
+  opacity: 0.8;
+}
+
+/* Set a style for all buttons */
+#comments{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+#comments:hover {
+  opacity: 0.8;
+}
+
+/* Set a style for all buttons */
+#edit{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+#edit:hover {
+  opacity: 0.8;
+}
+
+/* Set a style for all buttons */
+#save{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+#save:hover {
+  opacity: 0.8;
+}
+
+/* Set a style for all buttons */
+#submit,#send,#change,#add{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 10%;
+}
+
+#submit,#send,#change,#add:hover {
+  opacity: 0.8;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+
+#webPages {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#webPages td, #webPages th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#webPages tr:nth-child(even){background-color: #f2f2f2;}
+
+#webPages tr:hover {background-color: #ddd;}
+
+#webPages th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: black;
+}
+.navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+}
+			
+</style>
+			<div class="navbar">
+<a href="register.html">Register</a>
+ <a href="login.html">Login</a>
+  <a href="web.html">Search</a>
+ <a href="update.html">Update Account</a>
+
+</div>
+		
+		<div class="container" id="container">
+			<h1>Login</h1>
+			<p>Please fill in this form to log into your account</p>
+			<hr>
+			<label for="username"><b>Username</b></label>
+			<input type="password"   id="username"name="username">
+			<br>
+			<label for="password"><b>Password</b></label>
+			<input type="password" id="password" name="password">
+			<br>
+			<input type="button" id="submit" name="submit" value="Submit" onclick="submit()">
+			
+		</div>
+			<table id="webPages" >
+			
+			</table>
+			<script src = "/socket.io/socket.io.js"></script>
+			<script>
+				var socket = io();
+				
+				var username = document.getElementById("username");
+				var password = document.getElementById("password");
+				var div = document.getElementById("container");
+				var webPagesTable=document.getElementById("webPages");
+				var errorMessages="",fileName,setFileName,comment="";
+				var selfUsername,i,descriptionBox,image,imageSource="",imageWidth,imageHeight,fileContent,input,commentsString="",response;
+				var currentDate;
+				
+				function submit(){
+					
+					username.value=username.value.trim();
+					password.value=password.value.trim();
+					
+					socket.emit("validateLoginInfo",{username:username.value,password:password.value});
+					
+					socket.on("login",function(login){
+						
+						if(login){
+							
+							selfUsername=username.value;
+							
+							div.innerHTML = '<h1>Send a Webpage</h1>\
+											<p>Please fill in this form to send a webpage</p>\
+							<hr><img width="300" height="300" id="image" src="https://techli.com/wp-content/uploads/2012/02/piqturdrophere.jpg">\
+							<textarea style="width:300px;height:300px" id="fileContent" name="fileContent" placeholder="File content here" readonly></textarea>\
+							<textarea style="width:300px;height:300px" id="description" name="description" placeholder="Type description here" ></textarea><br>\
+							<input type="button" id="add" value="Add Image" onclick="addImage()">\
+							<input type="file" id="file" value="Add File" >\
+							<input type="button" id="send"value="Send" onclick="send()"><br>\
+							<h1>WebPages</h1>\
+							<hr>';
+							
+							
+							
+							webPagesTable.innerHTML+='<tr>\
+								<th>Name</th>\
+								<th>Image</th>\
+								<th>Description</th>\
+								<th>Views</th>\
+								<th>Date</th>\
+								<th>Comments</th>\
+								<th>View</th>\
+								<th>Delete</th>\
+							</tr>';
+							
+							descriptionBox=document.getElementById("description");		
+							image = document.getElementById("image");
+							fileContent = document.getElementById("fileContent");
+							input = document.getElementById("file");
+							
+							input.addEventListener("change", function () {
+								if (this.files && this.files[0]) {
+									var myFile = this.files[0];
+									var reader = new FileReader();
+		
+									reader.addEventListener('load', function (event) {
+										fileContent.value = event.target.result;
+			
+					
+									});
+    
+									reader.readAsText(myFile);
+								}   
+							});
+
+							socket.emit("getWebPages");
+						}
+						
+						else{
+							alert("Login failed");
+						}
+					});
+				}
+				
+
+				
+				function send(){
+					
+					errorMessages="";
+					
+					if(input.value.split(".")[input.value.split(".").length-1] !="html"){
+						errorMessages+="Your file must be an html file"+"\n";
+					
+					}
+					
+					
+					fileName= prompt("What do you want to name this file?");
+					fileName=fileName.trim();
+					
+					if(fileName.length == 0){
+						errorMessages+="Filename cannot be empty"+"\n";
+					}
+					
+					socket.emit("doesFileExist",fileName+".html");
+	
+				}
+				
+				
+				function addImage(){
+					
+					imageSource = prompt("What is the image url?");
+					image.src=imageSource;
+				}
+
+				
+				socket.on("getWebPage",function(webPage){
+					
+					if(webPage.username == selfUsername && !webPage.deleted){
+						
+
+
+						webPagesTable.innerHTML+='<tr id=\''+webPage.id.toString()+'\' >\
+						<td>'+webPage.name+'</td>\
+						<td>'+webPage.image+'</td>\
+						<td>'+webPage.description+'</td>\
+						<td>'+webPage.views+'</td>\
+						<td>'+webPage.date+'</td>\
+						<td><input type="button" id="comments" value="Comments" onclick="viewComments(\''+webPage.name+'\')"></td>\
+						<td><input type="button" id="view" value="View" onclick="viewWebPage(\''+webPage.name+'\')"></td>\
+						<td><input type="button" id="delete" value="Delete" onclick="deleteWebPage(\''+webPage.id.toString()+'\')"></td>\
+						</tr>';
+						
+					}
+				});
+				
+				socket.on("fileExist",function(exist){
+				
+					
+					if(exist){
+						errorMessages+="File already exists"+"\n";
+						
+					}
+					
+					
+					if(errorMessages==""){
+						descriptionBox.value=descriptionBox.value.trim();
+						
+						currentDate = new Date();
+						
+						socket.emit("sendWebPage",{username:selfUsername,name:fileName+".html",code:'<html>'+fileContent.value,image:'<img width='+image.width+' height='+image.height+' src='+imageSource.toString()+'>',description:descriptionBox.value,date: currentDate});
+						
+						alert("Web page sent");
+					}
+					
+					else if(errorMessages!=""){
+						alert(errorMessages);
+					}
+				});
+
+				socket.on("userNotExist",function(user){
+					
+					alert("Username "+user+" is not registered");
+					
+				});
+				
+				function viewComments(filename){
+					
+					
+					socket.emit("sendComments",filename);
+
+					fileName=filename;
+				}
+				
+
+				socket.on("getComments",function(comments){
+					
+					commentsString="";
+					
+					for(i=0;i<=comments.length-1;i++){
+						
+						if(comments[i] == "~"){
+							commentsString+="\n";
+						}
+						
+						else if(comments[i] !="~"){
+							commentsString+=comments[i];
+						}
+					}
+					
+
+					response = confirm(commentsString+"\n"+"Do you want to send a comment?");
+					
+					if(response){
+						
+						comment = prompt(commentsString+"\n"+"Type comment here");
+					
+					
+						socket.emit("addComment",{file:fileName,comment:comment,username:selfUsername});
+						
+						alert("Comment sent");
+					}
+					
+				});
+				
+				
+				function viewWebPage(file){
+
+					window.open(file);
+					
+				}
+				
+				function deleteWebPage(id){
+					document.getElementById(id).parentNode.removeChild(document.getElementById(id));
+					
+					socket.emit("deletePage",parseInt(id));
+				}
+				
+				
+				
+			</script>
+   </head> 
+</html>
