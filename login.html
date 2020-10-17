@@ -1,0 +1,422 @@
+<html>   
+   <head>
+		<style>
+		
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 10%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+#delete{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+#delete:hover {
+  opacity: 0.8;
+}
+
+/* Set a style for all buttons */
+#submit{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 10%;
+}
+
+#submit:hover {
+  opacity: 0.8;
+}
+
+/* Set a style for all buttons */
+#send{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 10%;
+}
+
+#send:hover {
+  opacity: 0.8;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+
+#messages {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#messages td, #messages th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#messages tr:nth-child(even){background-color: #f2f2f2;}
+
+#messages tr:hover {background-color: #ddd;}
+
+#messages th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+</style>
+		<div class="container" id="container">
+			<h1>Login</h1>
+			<p>Please fill in this form to log into your account</p>
+			<hr>
+			<label for="username"><b>Username</b></label>
+			<input type="text"   id="username"name="username">
+			<br>
+			<label for="password"><b>Password</b></label>
+			<input type="password" id="password" name="password">
+			<br>
+			<input type="button" id="submit" name="submit" value="Submit" onclick="submit()">
+		</div>
+		<div id="userResume" border=1>
+		
+		</div>
+			<script src = "/socket.io/socket.io.js"></script>
+			<script>
+			
+				var socket = io();
+				
+				var username = document.getElementById("username");
+				var password = document.getElementById("password");
+				var container = document.getElementById("container");
+				var messagesTable=document.getElementById("messages");
+				var userResume=document.getElementById("userResume");
+				
+				var selfUsername,sendUsername,i,messageBox,subjectBox;
+				var educationTable,experienceTable,awardsTable,projectsTable;
+				var fullName,address,email,telephone,websiteLink;
+				var contactInfo={},education=[],experience=[],awards=[],projects=[];
+				var i,j;
+				
+				function submit(){
+					
+					username.value=username.value.trim();
+					password.value=password.value.trim();
+					
+					socket.emit("validateLoginInfo",{username:username.value,password:password.value});
+					
+					socket.on("login",function(login){
+						
+						if(login){
+							
+							selfUsername=username.value;
+							container.parentNode.removeChild(container);
+							
+							socket.emit("sendResume");
+
+						}
+						
+						else{
+							alert("Login failed");
+						}
+					});
+				}
+				
+				function addEducation(){
+				
+					educationTable.innerHTML+='<tr >\
+					<b>School:</b><input type="text id="school"><br>\
+					<b>Level of Education:</b><input type="text id="educationLevel"><br>\
+					<b>Start Date:</b><input type="text id="startDate"><br>\
+					<b>End Date:</b><input type="text id="endDate">\
+					</tr><br>';
+					
+					socket.on("addEducation",selfUsername);
+				}
+				
+				function addExperience(){
+				
+					experienceTable.innerHTML+='<tr>\
+					<b>Job Title:</b><input type="text id="jobTitle"><br>\
+					<b>Company:</b><input type="text id="company"><br>\
+					<b>Start Date:</b><input type="text id="startDate"><br>\
+					<b>End Date:</b><input type="text id="endDate"><br>\
+					<b>Job Description:</b><br><textarea style="width:300px;height:300px" id="jobDescription" ></textarea>\
+					</tr><br>';
+					
+					socket.on("addExperience",selfUsername);
+					
+				}
+				
+				function addAwards(){
+				
+					awardsTable.innerHTML+='<tr >\
+					<b>Award Title:</b><input type="text id="awardTitle"><br>\
+					<b>Issuer:</b><input type="text id="issuer"><br>\
+					<b>Date Recieved:</b><input type="text id="dateRecieved"><br>\
+					<b>Award Description:</b><br><textarea style="width:300px;height:300px" id="awardDescription" ></textarea>\
+					</tr><br>';
+					
+					socket.on("addAwards",selfUsername);
+
+				}
+				
+				function addProjects(){
+				
+					projectsTable.innerHTML+='<tr >\
+					<b>Project Title:</b><input type="text id="projectTitle"><br>\
+					<b>Start Date:</b><input type="text id="startDate"><br>\
+					<b>End Date:</b><input type="text id="endDate"><br>\
+					<b>Project Description:</b><br><textarea style="width:300px;height:300px" id="projectDescription" ></textarea>\
+					</tr><br>';
+					
+					socket.on("addProjects",selfUsername);
+
+				}
+				
+				function save(){
+					
+					contactInfo={fullName:fullName.value,address:address.value,email:email.value,telephone:telephone.value,websiteLink:websiteLink.value};
+					
+					// education table 
+					for(i=0;i<=document.getElementById("education").rows.length-1;i++){
+						
+						
+						education.push({school:document.getElementById("education").rows[i].childNodes[1].value,educationLevel:document.getElementById("education").rows[i].childNodes[3].value,startDate:document.getElementById("education").rows[i].childNodes[5].value,endDate:document.getElementById("education").rows[i].childNodes[7].value});
+					
+					}
+					
+					// experience table 
+					for(i=0;i<=document.getElementById("experience").rows.length-1;i++){
+						
+						
+						experience.push({jobTitle:document.getElementById("education").rows[i].childNodes[1].value,company:document.getElementById("education").rows[i].childNodes[3].value,startDate:document.getElementById("education").rows[i].childNodes[5].value,endDate:document.getElementById("education").rows[i].childNodes[7].value,jobDescription:document.getElementById("education").rows[i].childNodes[9].value});
+					
+					}
+					
+					// awards table 
+					for(i=0;i<=document.getElementById("awards").rows.length-1;i++){
+						
+						
+						awards.push({awardTitle:document.getElementById("awards").rows[i].childNodes[1].value,issuer:document.getElementById("awards").rows[i].childNodes[3].value,dateRecieved:document.getElementById("awards").rows[i].childNodes[5].value,awardDescription:document.getElementById("awards").rows[i].childNodes[7].value});
+					
+					}
+					
+					// projects table
+					for(i=0;i<=document.getElementById("projects").rows.length-1;i++){
+
+						
+						projects.push({projectTitle:document.getElementById("awards").rows[i].childNodes[1].value,startDate:document.getElementById("awards").rows[i].childNodes[3].value,endDate:document.getElementById("projects").rows[i].childNodes[5].value,projectDescription:document.getElementById("projects").rows[i].childNodes[7].value});
+					
+					}
+					
+
+					socket.emit("save",{username:selfUsername,contactInfo:contactInfo,education:education,experience:experience,awards:awards,projects:projects});
+				
+
+				}
+			
+				socket.on("getResume",function(resume){
+					
+
+					
+					if(resume.username == selfUsername){
+
+					
+					userResume.innerHTML += '<input type="button" id="addEducation"value="Add Education" onclick="addEducation()">\
+							<input type="button" id="addExperience"value="Add Experience" onclick="addExperience()">\
+							<input type="button" id="addAwards"value="Add Awards" onclick="addAwards()">\
+							<input type="button" id="addProjects"value="Add Projects" onclick="addProjects()">\
+							<hr><h1>Contact Info</h1>\
+							<b>Full Name:</b><input type="text" value='+resume.contactInfo.fullName+'id="full name"><br>\
+							<b>Address:</b><input type="text" value='+resume.contactInfo.address+' id="address"><br>\
+							<b>Email:</b><input type="text"value='+resume.contactInfo.email+' id="email"><br>\
+							<b>Telephone:</b><input type="text" value='+resume.contactInfo.telephone+' id="telephone"><br>\
+							<b>Website Link:</b><input type="text" value='+resume.contactInfo.websiteLink+' id="website link"><br>\
+							<hr><h2>Education</h2>\
+							<table id="education"></table>\
+							<hr><h3>Experience</h3>\
+							<table id="experience"></table>\
+							<hr><h4>Awards</h4>\
+							<table id="awards"></table>\
+							<hr><h5>Projects</h5>\
+							<table id="projects"></table>\
+							<hr><input type="button" id="save"value="Save" onclick="save()">';
+							
+							fullName=document.getElementById("full name");
+							address=document.getElementById("address");
+							email=document.getElementById("email");
+							telephone=document.getElementById("telephone");
+							websiteLink=document.getElementById("website link");
+							
+							educationTable=document.getElementById("education");
+							experienceTable=document.getElementById("experience");
+							awardsTable=document.getElementById("awards");
+							projectsTable=document.getElementById("projects");
+							
+							
+							// add education
+							for(i=0;i<=resume.education.length-1;i++){
+								educationTable.innerHTML+='<tr >\
+								<b>School:</b><input type="text value='+resume.education[i].school+' id="school"><br>\
+								<b>Level of Education:</b><input type="text value='+resume.education[i].educationLevel+' id="educationLevel"><br>\
+								<b>Start Date:</b><input type="text value='+resume.education[i].startDate+' id="startDate"><br>\
+								<b>End Date:</b><input type="text value='+resume.education[i].endDate+' id="endDate">\
+								</tr><br>';
+							
+							}
+							
+							// add experience
+							for(i=0;i<=resume.experience.length-1;i++){
+								experienceTable.innerHTML+='<tr>\
+									<b>Job Title:</b><input type="text value='+resume.experience[i].jobTitle+' id="jobTitle"><br>\
+									<b>Company:</b><input type="text value='+resume.experience[i].company+' id="company"><br>\
+									<b>Start Date:</b><input type="text value='+resume.experience[i].startDate+' id="startDate"><br>\
+									<b>End Date:</b><input type="text value='+resume.experience[i].endDate+' id="endDate"><br>\
+									<b>Job Description:</b><br><textarea style="width:300px;height:300px" value='+resume.experience[i].jobDescription+' id="jobDescription" ></textarea>\
+									</tr><br>';
+							
+							}
+							
+							
+							// add awards
+							for(i=0;i<=resume.awards.length-1;i++){
+								awardsTable.innerHTML+='<tr >\
+								<b>Award Title:</b><input type="text value='+resume.awards[i].awardTitle+' id="awardTitle"><br>\
+								<b>Issuer:</b><input type="text value='+resume.awards[i].issuer+' id="issuer"><br>\
+								<b>Date Recieved:</b><input type="text value='+resume.awards[i].dateRecieved+' id="dateRecieved"><br>\
+								<b>Award Description:</b><br><textarea style="width:300px;height:300px" value='+resume.awards[i].awardDescription+' id="awardDescription" ></textarea>\
+								</tr><br>';
+							
+							}
+							
+							// add projects
+							for(i=0;i<=resume.projects.length-1;i++){
+								projectsTable.innerHTML+='<tr >\
+								<b>Project Title:</b><input type="text value='+resume.projects[i].projectTitle+'  id="projectTitle"><br>\
+								<b>Start Date:</b><input type="text value='+resume.projects[i].startDate+' id="startDate"><br>\
+								<b>End Date:</b><input type="text value='+resume.projects[i].endDate+' id="endDate"><br>\
+								<b>Project Description:</b><br><textarea style="width:300px;height:300px" value='+resume.projects[i].projectDescription+' id="projectDescription" ></textarea>\
+								</tr><br>';
+							
+							}
+							
+						}
+				});
+				
+				
+				
+			</script>
+   </head> 
+</html>
