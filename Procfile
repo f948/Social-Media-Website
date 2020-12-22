@@ -1,1 +1,1 @@
-web: node webserver.js
+web: node communications.js
