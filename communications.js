@@ -11,7 +11,7 @@ var splitKeyword=[],webpageData=[];
 var usernameExists=false,passwordExists=false,login=false,userExists=false,fileExist=false;
 var hours,time;
 const programFiles =["register.html","login.html","search.html","update.html","communications.js"];
-const port = process.env.PORT || 60274;
+const port = process.env.PORT || 3000;
 const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
 app.get('/', function (req, res) {
