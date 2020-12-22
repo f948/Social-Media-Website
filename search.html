@@ -1,0 +1,592 @@
+  
+<html>   
+   <head>
+		
+		<style>
+		
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 10%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+#submit{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 10%;
+}
+
+#submit:hover {
+  opacity: 0.8;
+}
+
+#change{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 10%;
+}
+
+#change:hover {
+  opacity: 0.8;
+}
+
+#view{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+#view:hover {
+  opacity: 0.8;
+}
+
+/* Set a style for all buttons */
+#comments{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+#comments:hover {
+  opacity: 0.8;
+}
+
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+
+
+#webpages {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#webpages td, #webpages th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#webpages tr:nth-child(even){background-color: #f2f2f2;}
+
+#webpages tr:hover {background-color: #ddd;}
+
+#webpages th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+#recent  {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#recent td, #recent  th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#recent  tr:nth-child(even){background-color: #f2f2f2;}
+
+#recent tr:hover {background-color: #ddd;}
+
+#recent  th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+#popular {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#popular td, #popular th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#popular tr:nth-child(even){background-color: #f2f2f2;}
+
+#popular tr:hover {background-color: #ddd;}
+
+#popular th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: black;
+}
+.navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+}
+
+table {
+    border: 1px solid #CCC;
+    border-collapse: collapse;
+}
+
+td {
+    border: none;
+}
+	
+</style>
+			<div class="navbar">
+<a href="register.html">Register</a>
+ <a href="login.html">Login</a>
+  <a href="search.html">Search</a>
+ <a href="update.html">Update Account</a>
+</div>
+		<div class="container"id="container">
+			<p>Search by</p>
+			<select id="select">
+				<option value="User">User</option>
+				<option value="Title">Title</option>
+				<option value="File">File</option>
+				<option value="Description">Description</option>
+			</select>
+			<br>
+			<input type="text" id="search">
+			<br>
+			<input type="button" id="submit" value="Search" onclick="getSearch()">
+			<br>
+			
+		
+		
+		<div id="page">
+		
+		<br>
+		<h1>Recently Uploaded</h1>
+		<table id="recent" >
+		</table>
+		
+
+		</div>
+		
+		
+		<script src = "/socket.io/socket.io.js"></script>
+		<script>
+			
+			var socket = io();
+			var selectBox=document.getElementById("select");
+			var webPagesTable;
+			var recentTable = document.getElementById("recent");
+			var popularTable = document.getElementById("popular");
+			var i,search=document.getElementById("search");
+			var comment="",commentsString="",usernameValue,passwordValue,response,fileName,user;
+			var pageDiv = document.getElementById("page");
+			var imageClick=false;
+			
+			const videoAndAudioFileExtensions=["mpg","mpeg","avi","wmv","mov","rm","ram","swf","flv","mid","midi","wma","aac","mp4","webm","mp3","wav","ogg"];
+			const imageFileExtensions=["jpg","jpeg","png","gif"];
+			
+			
+			socket.emit("getRecentlyUploadedWebPages");
+			
+			function getSearch(){
+				
+				pageDiv.innerHTML='<h1>Posts</h1>\
+									<table id="webpages">\
+									</table>';
+				
+				webPagesTable = document.getElementById("webpages");
+				
+				if(selectBox.value == "User"){
+					getWebPages();
+				}
+				
+				else if(selectBox.value == "Title"){
+					getWebPagesByTitle();
+				}
+			
+				else if(selectBox.value == "File"){
+					getWebPagesByFile();
+				}
+				
+				else if(selectBox.value == "Description"){
+					getWebPagesByDescription();
+				}
+			}
+
+			function getWebPages(){
+				
+				search.value=search.value.trim();
+				
+				socket.emit("getUserWebPages",search.value);
+				
+				webPagesTable.innerHTML="";
+							
+			}
+			
+			function getWebPagesByTitle(){
+			
+				search.value=search.value.trim();
+				
+				socket.emit("getTitleWebPages",search.value);
+
+				webPagesTable.innerHTML="";
+			}
+			
+			function getWebPagesByFile(){
+			
+				search.value=search.value.trim();
+				
+				socket.emit("getFileWebPages",search.value);
+				
+				webPagesTable.innerHTML="";
+			}
+			
+			function getWebPagesByDescription(){
+			
+				search.value=search.value.trim();
+				
+				socket.emit("getDescriptionWebPages",search.value);
+				
+				webPagesTable.innerHTML="";
+			}
+				socket.on("getUserWebPage",function(webPage){
+					
+
+							
+					if(webPage.username == search.value && !webPage.deleted){
+						
+
+
+						webPage.image='<img width="300" height="300" onclick="viewComments(\''+webPage.id.toString()+webPage.name+'\')" src='+webPage.imageSrc+'>';
+						
+						if(webPage.name != "NO FILE ATTACHMENT"){
+							webPagesTable.innerHTML+='<tr id=\''+webPage.id.toString()+'\' onclick="viewWebPage(\''+webPage.id.toString()+webPage.name+'\')">\
+							<td>'+webPage.profileImg+'<br>'+webPage.username+'</td>\
+							<td>'+webPage.image+'<br>'+webPage.title+'<br><br>'+webPage.views+" views"+"<br><br> Posted on "+webPage.dateString+'<br><br> File Attachment: '+webPage.name+'</td>\
+							<td>'+webPage.description+'</td>\
+							</tr>';
+						}
+						
+						else if(webPage.name == "NO FILE ATTACHMENT"){
+							webPagesTable.innerHTML+='<tr id=\''+webPage.id.toString()+'\' >\
+							<td>'+webPage.profileImg+'<br>'+webPage.username+'</td>\
+							<td>'+webPage.image+'<br>'+webPage.title+'<br><br>'+webPage.views+" views"+"<br><br> Posted on "+webPage.dateString+'<br><br> File Attachment: '+webPage.name+'</td>\
+							<td>'+webPage.description+'</td>\
+							</tr>';
+						}
+						
+					}
+				});
+				
+				socket.on("getTitleWebPage",function(webPage){
+
+					
+					if(!webPage.deleted){
+						
+						webPage.image='<img width="300" height="300" onclick="viewComments(\''+webPage.id.toString()+webPage.name+'\')" src='+webPage.imageSrc+'>';
+						
+						if(webPage.name != "NO FILE ATTACHMENT"){
+							webPagesTable.innerHTML+='<tr id=\''+webPage.id.toString()+'\' onclick="viewWebPage(\''+webPage.id.toString()+webPage.name+'\')">\
+							<td>'+webPage.profileImg+'<br>'+webPage.username+'</td>\
+							<td>'+webPage.image+'<br>'+webPage.title+'<br><br>'+webPage.views+" views"+"<br><br> Posted on "+webPage.dateString+'<br><br> File Attachment: '+webPage.name+'</td>\
+							<td>'+webPage.description+'</td>\
+							</tr>';
+						}
+						
+						else if(webPage.name == "NO FILE ATTACHMENT"){
+							webPagesTable.innerHTML+='<tr id=\''+webPage.id.toString()+'\' >\
+							<td>'+webPage.profileImg+'<br>'+webPage.username+'</td>\
+							<td>'+webPage.image+'<br>'+webPage.title+'<br><br>'+webPage.views+" views"+"<br><br> Posted on "+webPage.dateString+'<br><br> File Attachment: '+webPage.name+'</td>\
+							<td>'+webPage.description+'</td>\
+							</tr>';
+						}
+						
+					}
+				});
+				
+				socket.on("getFileWebPage",function(webPage){
+
+					
+					if(!webPage.deleted){
+						
+						webPage.image='<img width="300" height="300" onclick="viewComments(\''+webPage.id.toString()+webPage.name+'\')" src='+webPage.imageSrc+'>';
+						
+						if(webPage.name != "NO FILE ATTACHMENT"){
+							webPagesTable.innerHTML+='<tr id=\''+webPage.id.toString()+'\' onclick="viewWebPage(\''+webPage.id.toString()+webPage.name+'\')">\
+							<td>'+webPage.profileImg+'<br>'+webPage.username+'</td>\
+							<td>'+webPage.image+'<br>'+webPage.title+'<br><br>'+webPage.views+" views"+"<br><br> Posted on "+webPage.dateString+'<br><br> File Attachment: '+webPage.name+'</td>\
+							<td>'+webPage.description+'</td>\
+							</tr>';
+						}
+						
+						else if(webPage.name == "NO FILE ATTACHMENT"){
+							webPagesTable.innerHTML+='<tr id=\''+webPage.id.toString()+'\' >\
+							<td>'+webPage.profileImg+'<br>'+webPage.username+'</td>\
+							<td>'+webPage.image+'<br>'+webPage.title+'<br><br>'+webPage.views+" views"+"<br><br> Posted on "+webPage.dateString+'<br><br> File Attachment: '+webPage.name+'</td>\
+							<td>'+webPage.description+'</td>\
+							</tr>';
+						}
+						
+					}
+				});
+				
+				socket.on("getDescriptionWebPage",function(webPage){
+
+					
+					if(!webPage.deleted){
+						
+						webPage.image='<img width="300" height="300" onclick="viewComments(\''+webPage.id.toString()+webPage.name+'\')" src='+webPage.imageSrc+'>';
+						
+						if(webPage.name != "NO FILE ATTACHMENT"){
+							webPagesTable.innerHTML+='<tr id=\''+webPage.id.toString()+'\' onclick="viewWebPage(\''+webPage.id.toString()+webPage.name+'\')">\
+							<td>'+webPage.profileImg+'<br>'+webPage.username+'</td>\
+							<td>'+webPage.image+'<br>'+webPage.title+'<br><br>'+webPage.views+" views"+"<br><br> Posted on "+webPage.dateString+'<br><br> File Attachment: '+webPage.name+'</td>\
+							<td>'+webPage.description+'</td>\
+							</tr>';
+						}
+						
+						else if(webPage.name == "NO FILE ATTACHMENT"){
+							webPagesTable.innerHTML+='<tr id=\''+webPage.id.toString()+'\' >\
+							<td>'+webPage.profileImg+'<br>'+webPage.username+'</td>\
+							<td>'+webPage.image+'<br>'+webPage.title+'<br><br>'+webPage.views+" views"+"<br><br> Posted on "+webPage.dateString+'<br><br> File Attachment: '+webPage.name+'</td>\
+							<td>'+webPage.description+'</td>\
+							</tr>';
+						}
+					}
+				});
+				
+				socket.on("getRecentlyUploadedWebPage",function(webPage){
+					
+
+							
+					if(!webPage.deleted){
+						
+						webPage.image='<img width="300" height="300" onclick="viewComments(\''+webPage.id.toString()+webPage.name+'\')" src='+webPage.imageSrc+'>';
+						
+						if(webPage.name != "NO FILE ATTACHMENT"){
+							recentTable.innerHTML+='<tr id=\''+webPage.id.toString()+'\' onclick="viewWebPage(\''+webPage.id.toString()+webPage.name+'\')">\
+							<td>'+webPage.profileImg+'<br>'+webPage.username+'</td>\
+							<td>'+webPage.image+'<br>'+webPage.title+'<br><br>'+webPage.views+" views"+"<br><br> Posted on "+webPage.dateString+'<br><br> File Attachment: '+webPage.name+'</td>\
+							<td>'+webPage.description+'</td>\
+							</tr>';
+						}
+						
+						else if(webPage.name == "NO FILE ATTACHMENT"){
+							recentTable.innerHTML+='<tr id=\''+webPage.id.toString()+'\' >\
+							<td>'+webPage.profileImg+'<br>'+webPage.username+'</td>\
+							<td>'+webPage.image+'<br>'+webPage.title+'<br><br>'+webPage.views+" views"+"<br><br> Posted on "+webPage.dateString+'<br><br> File Attachment: '+webPage.name+'</td>\
+							<td>'+webPage.description+'</td>\
+							</tr>';
+						}
+						
+					}
+				});
+				
+				
+				
+				function viewComments(filename){
+				
+					imageClick=true;
+					
+					socket.emit("sendComments",filename);
+
+					fileName=filename;
+				}
+				
+				function viewWebPage(file){
+					
+					if(!imageClick){
+					
+						if(!imageFileExtensions.includes(file.split(".")[file.split(".").length-1])){
+							window.open(file);
+						
+						}
+					
+						else if(imageFileExtensions.includes(file.split(".")[file.split(".").length-1])){
+				
+							socket.emit("sendImageDataURL",file);
+						}
+				
+						socket.emit("webPageViewed",file);
+					
+					}
+					
+					imageClick=false;
+				}
+				
+				
+				socket.on("getComments",function(comments){
+					
+					commentsString="";
+					
+					for(i=0;i<=comments.length-1;i++){
+						
+						if(comments[i] == "~"){
+							commentsString+="\n";
+						}
+						
+						else if(comments[i] !="~"){
+							commentsString+=comments[i];
+						}
+					}
+					
+					comment = prompt(commentsString+"\n"+"Type comment here");
+					
+					if(comment == ""){
+						comment="";
+					}
+					
+					socket.emit("addComment",{file:fileName,comment:comment});
+						
+					
+				});
+				
+				socket.on("userNotExist",function(user){
+					
+					alert("Username "+user+" is not registered");
+					
+				});
+				
+				socket.on("getImageDataURL",function(data){
+					
+					var tmpLink = document.createElement('a');
+				
+					tmpLink.download =data.name;
+					tmpLink.href = data.URL;
+				
+					document.head.appendChild(tmpLink);
+					tmpLink.click();
+					document.head.removeChild(tmpLink);
+					
+				});
+	
+		</script>
+	
+	</head>
+</html>
