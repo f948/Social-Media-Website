@@ -324,6 +324,7 @@ td {
 				var selfUsername,i,descriptionBox,image,imageSource="",imageWidth,imageHeight,fileContent,input,commentsString="";
 				var currentDate,fileContent="",selectFile,imageContent,profileImage,titleBox,profileImageDiv,title,description,errorMessages="";
 				var imageClick=false,response=false,deleteBtnClick=false;
+				var newTitle,newFileName,newDescription;
 				
 				const videoAndAudioFileExtensions=["mpg","mpeg","avi","wmv","mov","rm","ram","swf","flv","mid","midi","wma","aac","mp4","webm","mp3","wav","ogg"];
 				const imageFileExtensions=["jpg","jpeg","png","gif"];
@@ -387,8 +388,56 @@ td {
 						if(errorMessages == ""){
 						
 							currentDate = new Date();
-		
 					
+		
+							title=title.split(" ");
+		
+							newTitle="";
+		
+							for(i=0;i<=title.length-1;i++){
+			
+								if(title[i].trim().length != 0){
+				
+									newTitle+=title[i]+" ";;
+					
+								}
+							}
+		
+							newTitle = newTitle.slice(0,newTitle.length-1);
+							title=newTitle;
+							
+							fileName=fileName.split(" ");
+		
+							newFileName="";
+		
+							for(i=0;i<=fileName.length-1;i++){
+			
+								if(fileName[i].trim().length != 0){
+				
+									newFileName+=fileName[i]+" ";;
+					
+								}
+							}
+		
+							newFileName = newFileName.slice(0,newFileName.length-1);
+							fileName=newFileName;
+							
+							description=description.split(" ");
+		
+							newDescription="";
+		
+							for(i=0;i<=description.length-1;i++){
+			
+								if(description[i].trim().length != 0){
+				
+									newDescription+=description[i]+" ";;
+					
+								}
+							}
+		
+							newDescription = newDescription.slice(0,newDescription.length-1);
+							description=newDescription;
+							
 							if(input.value.length == 0){
 								socket.emit("sendWebPage",{profileImg:'<img width="100" height="100" onerror="invalidProfileImage()"id="profile" src='+profileImage.src+'>',username:selfUsername,title:title,name:fileName,code:"",image:'<img width="300" height="300" src='+image.src+'>',imageSrc:image.src,description:description,date: currentDate});
 					
@@ -396,7 +445,7 @@ td {
 						
 							else if(input.value.length != 0){
 						
-							
+								
 							
 								socket.emit("sendWebPage",{profileImg:'<img width="100" height="100" onerror="invalidProfileImage()"id="profile" src='+profileImage.src+'>',username:selfUsername,title:title,name:fileName+"."+input.value.split(".")[input.value.split(".").length-1],code:fileContent,image:'<img width="300" height="300" src='+image.src+'>',imageSrc:image.src,description:description,date: currentDate});
 					
@@ -611,7 +660,6 @@ td {
 					
 					imageClick=true;
 	
-					
 					socket.emit("sendComments",filename);
 
 					fileName=filename;
