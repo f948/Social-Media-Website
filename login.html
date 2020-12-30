@@ -468,7 +468,6 @@ td {
 						}
 					}
 					
-					// remove non alphanumeric characters
 					for(i=0;i<=keyword.length-1;i++){
 						
 						newKeyword+=keyword[i];
@@ -504,10 +503,8 @@ td {
 							<div id="profileImageDiv"><img width="100" height="100" onerror="invalidProfileImage()"id="profile" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm_kVdMwEYyU95pNWTknAUfKokV1owQDTaVA&usqp=CAU"></div><br>\
 							<input type="button" value="Send Link" onclick="addProfileImage()">\
 							<input type="file" id="profile image"><br><input type="button" value="Save" onclick="saveProfileImage()"><br>\
-											<h1>Upload a Post</h1>\
 											<br><p>Give your post a title and a description</p>\
 											<textarea style="width:300px;height:75px" id="title" name="title" placeholder="Type a title here" ></textarea><br>\
-											<br>\
 											<textarea style="width:300px;height:150px" id="description" name="description" placeholder="Type a description here" ></textarea><br>\
 											<p>Attach a thumbnail image</p><br>\
 							<img width="300" height="300" id="image" onerror="invalidThumbnailImage()" src="https://bondconsultingservices.com/wp-content/uploads/2017/01/image-icon-goes-here.png"><br>\
@@ -517,7 +514,6 @@ td {
 							<input type="file" id="file"><br>\
 							<p>Click to upload your post</p>\
 							<input type="button" id="upload"value="Upload" onclick="upload()">\
-							<h1>Posts</h1>\
 							<br>';
 							
 							titleBox=document.getElementById("title");
@@ -619,7 +615,7 @@ td {
 						if(webPage.name != "NO FILE ATTACHMENT"){
 							webPagesTable.innerHTML+='<tr id=\''+webPage.id.toString()+'\' onclick="viewWebPage(\''+webPage.id.toString()+webPage.name+'\')">\
 							<td>'+webPage.profileImg+'<br>'+webPage.username+'</td>\
-							<td>'+webPage.image+'<br>'+webPage.title+'<br><br>'+webPage.views+" views"+"<br><br> Posted on "+webPage.dateString+'<br><br> File Attachment: '+webPage.name+'</td>\
+							<td>'+webPage.image+'<br>'+webPage.title+"<br><br> Posted on "+webPage.dateString+'<br><br> File Attachment: '+webPage.name+'</td>\
 							<td>'+webPage.description+'</td>\
 							<td><input type="button" id="delete" value="Delete" onclick="deleteWebPage(\''+webPage.id.toString()+'\')"></td>\
 							</tr>';
@@ -628,7 +624,7 @@ td {
 						else if(webPage.name == "NO FILE ATTACHMENT"){
 							webPagesTable.innerHTML+='<tr id=\''+webPage.id.toString()+'\' >\
 							<td>'+webPage.profileImg+'<br>'+webPage.username+'</td>\
-							<td>'+webPage.image+'<br>'+webPage.title+'<br><br>'+webPage.views+" views"+"<br><br> Posted on "+webPage.dateString+'<br><br> File Attachment: '+webPage.name+'</td>\
+							<td>'+webPage.image+'<br>'+webPage.title+"<br><br> Posted on "+webPage.dateString+'<br><br> File Attachment: '+webPage.name+'</td>\
 							<td>'+webPage.description+'</td>\
 							<td><input type="button" id="delete" value="Delete" onclick="deleteWebPage(\''+webPage.id.toString()+'\')"></td>\
 							</tr>';
@@ -704,9 +700,6 @@ td {
 				
 							socket.emit("sendImageDataURL",file);
 						}
-					
-						socket.emit("webPageViewed",file);
-					
 					}
 					
 					deleteBtnClick=false;
