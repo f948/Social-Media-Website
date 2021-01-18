@@ -343,7 +343,6 @@ span.psw {
 					if(errorMessages==""){
 						
 						socket.emit("update",{oldUsername:oldUsername,oldPassword:oldPassword,newUsername:username.value,newPassword:password.value});
-						socket.emit("change",{oldUsername:oldUsername,newUsername:username.value});
 						alert("Update successful");
 					}
 					
